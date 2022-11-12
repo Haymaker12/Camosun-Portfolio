@@ -1,0 +1,1 @@
+After several iterations of trial and error with tracker implementation we moved to a new approach for tracking the direction of a detection. This implementation simply stores each position of detection given by the detector and draws a line from each and uses the mean change of the Y position to decide if it is moving onboard or offboard the vessel.

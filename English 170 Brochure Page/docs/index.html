@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Archipelago Project Brochure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link rel="shortcut icon" type="image/x-icon" href="source/favicon.ico">
+	<style>
+	.nav-item {
+		padding-right: 30px;
+		padding-left: 20px;
+	}
+	
+	.navbar {
+	  padding-top: 15px;
+	  padding-bottom: 15px;
+	  border: 0;
+	  border-radius: 0;
+	  margin-bottom: 0;
+	  margin-top: 0;
+	  font-size: 12px;
+	  letter-spacing: 5px;
+	}
+
+	.navbar-nav li a:hover {
+	  color: #1abc9c !important;
+	}
+	
+	.topic-sep {
+		padding-top: 40px;
+		padding-bottom: 100px;
+		margin-left: -10;
+		margin-right: -10;
+		
+	}
+	
+	.bg1 {
+		background-color: #c2e3ef;
+		box-shadow: 0px 10px 100px #c2e3ef, 0px -30px 30px #c2e3ef;
+	}
+	.bg2 {
+		background-color: #ffffff;
+		box-shadow: 0px 10px 100px #ffffff, 0px -30px 30px #ffffff;
+	}
+	.nav-bg {
+		background-color: #519ead;
+	}
+	
+	.container-fluid a {
+		color: #dfe0df;
+		text-decoration: none;
+	}
+	
+	.descript {
+		padding-right: 20em;
+		padding-left: 20em;
+		font-size: 1.25vw;
+	}
+
+	</style>
+  </head>
+  <body style="background:url('bg.jpg');background-size:100%100%;background-repeat:no-repeat;">
+	<!-- Page Header -->
+	<div>
+      <img src="logo.png" style="position:absolute;right:0px;width:200px;padding:20px;filter:brightness(1.6);"/>
+	  <h1 style="padding:40px;margin-bottom:0;color:#ffffff;">Archipelago Project Brochure</h1>
+	  
+      <!-- Nav bar -->
+	  <nav class="navbar navbar-default navbar-expand-sm nav-bg">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand nav-item" href="#">Home</a>
+			</div>
+			<ul class="nav navbar-nav justify-content-end">
+			  <li class="nav-item"><a href="#project">Project</a></li>
+			  <li class="nav-item"><a href="#goal">Goal</a></li>
+			  <li class="nav-item"><a href="#build">Build</a></li>
+			  <li class="nav-item"><a href="#future">Future</a></li>
+			  <li class="nav-item"><a href="#scrum">Scrum</a></li>
+			  <li class="nav-item"><a href="#meetings">Meetings</a></li>
+			  <li class="nav-item"><a href="#roles">Roles</a></li>
+			  <li class="nav-item"><a href="#con">Conclusion</a></li>			  
+			</ul>
+		  </div>
+		</nav>
+    </div>
+    <!-- Main Content -->
+    <div class="container-fluid text-center" style="margin-left:0;margin-right:0;">
+      <!-- About Section -->
+      <section>
+        <!-- Describe the project -->
+        <div class="topic-sep bg1" id="project">
+          <div>
+            <h2>Archipelago's project</h2>
+          </div>
+          <div class="descript">
+            <p>
+              The Archipelago is a private company in Victoria which work with the fishing industry, NGOs, and regulators to implement sustainable practices through at–sea and dockside observer programs, electronic monitoring technology, and marine environmental services. At Archipelago a lot of the observation and monitoring they do is based on human review, and using simple sensors to track vessel movement, and equipment use to give simple time frames for activity. Archipelago uses these tools to give diagnostics and monitoring on a web platform. The project goal is to investigate and develop a tool that uses machine learning for object detection to determine what specific objects are being moved on and off the vessel during periods where fish are being hauled.
+            </p>
+          </div>
+        </div>
+        <!-- Describe the goal of the project -->
+        <div class="topic-sep bg2" id="goal">
+          <div>
+            <h2>Our Goal</h2>
+          </div>
+          <div class="descript">
+            <p>
+              The goal of Archipelago projects is to detect and track the objects from the fixed camera video to identify that is onboarding or offboarding, and then generate an output file of the timestamps, unique id for each fish and state of the object as offboarding or onboarding. The object is detected by using a machine learning model, thus we would try multiple models to find the best model. Also, it would be trained with proper dataset to have better performance and accuracy.
+            </p>
+          </div>
+        </div>
+        <!-- Describe what we worked on -->
+        <div class="topic-sep bg1" id="build">
+          <div>
+            <h2>What we built</h2>
+          </div>
+          <div class="descript">
+            <div class="mb-5">
+				<h4>Object Tracker</h4>
+				<p>We built object tracker using OpenCV's CSRT (Channel and Spatial Reliability Tracking) model.
+          CSRT model has residence of overlapping by other object and better accuracy than other OpenCV's tracker, so we picked this model for tracker.
+          It tracks the object that is selected by user.</p>
+				<img src="source/object_tracker_ex.gif" style="position:relative;right:0px;width:50%;"/>
+			</div>
+			<div class="my-5">
+				<h4>Object Detector</h4>
+				<p>We built object detector using YOLO (You Only Look Once) machine learning model.
+          We trained YOLOv4 model with some fish and hooks. It took quiet a long time to train the model to have higher accuracy to detect the object.
+          It draws bounding boxes around the objects when YOLO model detects the objects and display confidence value.</p>
+				<img src="source/object_detector_ex.gif" style="position:relative;right:0px;width:50%;"/>
+			</div>
+            <div class="my-5">
+			  <h4>Object Tracker combined with Detector</h4>
+			  <p>After several iterations of trial and error with tracker implementation we moved to a new approach for tracking the direction of a detection. This implementation simply stores each position of detection given by the detector and draws a line from each and uses the mean change of the Y position to decide if it is moving onboard or offboard the vessel.</p>
+              <img src="source/object_tracking_with_line.gif" style="position:relative;right:0px;width:50%;"/>
+			</div>
+          </div>
+        </div>
+        <!-- Describe the projects future -->
+        <div class="topic-sep bg2" id="future">
+          <div>
+            <h2>Where the project goes next</h2>
+          </div>
+          <div class="descript">
+            <p>
+              This object tracking model can detect and track the fish from the sea, also can identify it's direction of motion. Archipelago will use this program as initial model for their business. However, it could not give unique id to the fish, so the future team would try to use well trained machine learning model to identify fish uniquely.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Meeting Section -->
+      <section>
+        <!-- Describe how we organized Scrum meetings -->
+        <div class="topic-sep bg1" id="scrum">
+          <div>
+            <h2>Scrum Meeting</h2>
+          </div>
+          <div class="descript">
+            <p>
+              For our team we had our project organization centered around a weekly Sprint planning, and a daily Monday to Thursday stand up with our sponsor. The scrum meetings have been extreamly effective in our project organization giving us a time to have clear discussion about the next steps in our project and to generate discussion from the sponsor about the content we are are to implement next. A part of our scrums has been note taking for the decisions made in the meetings for our weekly status reports that detail our work.
+            </p>
+          </div>
+        </div>
+        <!-- Standup meeting -->
+        <div class="topic-sep bg2" id="meetings">
+          <div>
+            <h2>Daily stand-up meetings</h2>
+          </div>
+          <div class="descript">
+            <p>
+              For our meetings we set underlying responsibilities to each of us to keep track of, although most of these have been implicit and based on the work we are doing. These responsibilities are based around the principles of professionalism and predetermined responsibilities from our team contract. The responsibilities are, keeping the project well documented, Keeping the sponsor and team members informed of changes or status of tasks, and managing tim to avoid poor mental health while working on the project.
+            </p>
+          </div>
+        </div>
+        <!-- Meeting responsibilities -->
+        <div class="topic-sep bg1" id="roles">
+          <div>
+            <h2>Our roles in a meeting</h2>
+          </div>
+          <div class="descript">
+            <p>
+              In our group we have assigned ourselves roles to maintain a clear structure to our meetings and to assign specific responsibilities. In our group we currently have our roles as follows:
+            </p>
+			<div class="card-group">
+			  <div class="card">
+				<img class="card-img-top" src="source/Austin.jpg" alt="Card image cap">
+				<div class="card-body">
+				  <h5 class="card-title">Austin</h5>
+				  <p class="card-text">Documentation, Programming</p>
+				</div>
+			  </div>
+			  <div class="card">
+				<img class="card-img-top" src="source/Alexander.jpg" alt="Card image cap">
+				<div class="card-body">
+				  <h5 class="card-title">Alexander.B</h5>
+				  <p class="card-text">Scrum Master, Programming</p>
+				</div>
+			  </div>
+			  <div class="card">
+				<img class="card-img-top" src="source/JunghyeonCho.jpg" alt="Card image cap">
+				<div class="card-body">
+				  <h5 class="card-title">John.C</h5>
+				  <p class="card-text">ML-Training, Programming</p>
+				</div>
+			  </div>
+			</div>
+          </div>
+        </div>
+		<!-- Conclusion -->
+		<div class="topic-sep bg2" id="con">
+          <div>
+            <h2>Conclusion</h2>
+          </div>
+          <div class="descript">
+            <p>
+              On behalf of Team Archipelago, we thank our sponsor for the opportunity to explore the field of Machine Learning and developing object detection models, along with the hands-on effort put in by our team members for labeling data, studying a new language, and experiencing the Agile workflow through the Azure Dev-ops platform. 
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

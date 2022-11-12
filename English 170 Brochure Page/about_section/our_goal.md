@@ -1,0 +1,2 @@
+## Our Goal
+The goal of Archipelago projects is to detect and track the objects from the fixed camera video to identify that is onboarding or offboarding, and then generate an output file of the timestamps, unique id for each fish and state of the object as offboarding or onboarding. The object is detected by using a machine learning model, thus we would try multiple models to find the best model. Also, it would be trained with proper dataset to have better performance and accuracy.
