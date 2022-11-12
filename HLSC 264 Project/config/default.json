@@ -1,0 +1,4 @@
+{
+    "mongoURL": "mongodb+srv://IDETest:IDEPassword@cluster0.srqhk.mongodb.net/ide?retryWrites=true&w=majority",
+    "jwtSecret": "ChronicIsTheIMDMascot"
+}

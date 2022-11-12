@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="utf-8">
+		<title> Parsing system</title>
+
+		<script crossorigin 
+			src = "https://unpkg.com/react@16/umd/react.development.js"> 
+		</script>
+		<script crossorigin 
+			src = "https://unpkg.com/react-dom@16/umd/react-dom.development.js"> 
+        </script>
+        <script crossorigin 
+            src = "https://unpkg.com/@babel/standalone/babel.min.js"> 
+        </script>
+		<script crossorigin
+			src="https://unpkg.com/react-is@16/umd/react-is.development.js">
+		</script>
+		<script crossorigin
+			src="https://unpkg.com/styled-components/dist/styled-components.min.js">
+		</script>
+
+	</head>
+	
+	<body style=" margin:0px;" class="bg">
+		<div id="root"></div>
+            <script type = "text/babel">
+                //data structure mockup. Each one is a project and they are sorted by the program currently, will add support for sort by date or popularity as needed. The main parser handles the content 
+                // within the main object, and all of the other content objects within.
+                const myStuff = [
+                    {program: "Dental", name: "Project 1", shortDescription: "First parse test", 
+                    longDescription: "Ugh first parse test", participants: ["me", "myself", "I"], date: "2/5/2021", 
+                        content: [{id: 0, type: "h1", content: "give me your teeth"},
+                        {id: 1, type: "p", content: "This paragraph is about how you should give me you f'ing teeth before I go rambo on the toothfairy to make up for your sin. All dentists" +
+                        " dream of this day. the day of endless teeth raining from the sky. So gimmy"}]}, 
+                    {program: "Music", name: "Project 2", shortDescription: "First parse test", 
+                    longDescription: "Ugh first parse test", participants: ["me", "myself", "I"], date: "2/5/2021",
+                        content: [{id: 0, type: "pp", content: "testSlide.JPG"}, {id: 1, type: "ps", content:"testPoster.JPG"}, {id: 2, type: "v", content: "TestVideo.mp4"}]}, 
+                    {program: "Music", name: "Project 3", shortDescription: "First parse test", 
+                    longDescription: "Ugh first parse test", participants: ["me", "myself", "I"], date: "2/5/2021", 
+                        content: [{id: 0, type: "h1", content: "Look guys I get it"},
+                        {id: 1, type: "p", content: "I thought it was sad too, but no matter how many fan fics you write you cant change the truth."},{id: 2, type: "h2", content: "Mufassa is dead get over it."}]},
+                    {program: "Dental", name: "Project 4", shortDescription: "First parse test", 
+                    longDescription: "Ugh first parse test", participants: ["me", "myself", "I"], date: "2/5/2021", 
+                        content: [{id: 0, type: "h1", content: "Uh oh, look at these losers who did not go to gamer school."},
+                        {id: 1, type: "p", content: "can you freaking believe these scrubs? Bet they have negative kda in call of warfare modern" + 
+                        " duty twelve unbelievable, like learn to git gud and go to video game college like I did amirite?"},{id: 2, type: "si", content: "healthTestImage.jpg"}]}
+                ];
+                // components
+                // app component.
+				const App = ({className}) => {
+                    return (
+                        <div className = {className}>
+                            <Parser/>
+                        </div>
+                    )
+                };
+                //top level parse component, splits data into categories, based on the program and renders those lists.
+                const Parser = ({className, data}) =>{
+                    let sortedData = Sort(data);
+                    
+                    return (
+                        <div className = {className}> 
+                            {sortedData.map( program =>
+                                <div key = {program.program}>
+                                <h1> {program.program} </h1>
+                                {
+                                    program.projects.map(project => (
+                                        <div key = {project.name}>
+                                        <ProjectHeader name = {project.name} authors = {project.participants}/>
+                                        <ProjectContent  content = {project.content} />
+                                        </div>
+                                    ))
+                                
+                                }
+                                </div>
+                            )}
+                        </div>
+                    )
+                };
+                //sort function, made this a function because the idea made my c# monke brain hurt less. can easily convert to being part of sort function later.
+                const Sort = (data) => {
+                    let programList = [];
+                    myStuff.forEach(item => {
+                        if(programList.length > 0){
+                            let addCourse = true;
+                            programList.forEach(course =>{
+                                if(item.program === course.program){
+                                    addCourse = false;
+                                    course.projects.push(item);
+                                }
+                            })
+                            if(addCourse){
+                                programList.push({program: item.program, projects: [item]});
+                            }
+                        } else {
+                            programList.push({program: item.program, projects: [item]});
+                        }
+                    })
+                    return programList;
+                }
+                //project component, renders out and parses an individual project using the content tag within an individual item object.
+                const ProjectContent = ({className,  content}) => {
+                    return(
+                        <>
+                            
+                            {content.map( item => {
+                                
+                                switch(item.type){
+                                    case "h1":
+                                        return(
+                                            <StyledHeaderOne key = {item.id}> {item.content} </StyledHeaderOne>
+                                        )
+                                    case "h2":
+                                        return(
+                                            <StyledHeaderTwo key = {item.id}> {item.content} </StyledHeaderTwo>
+                                        )
+                                    case "p":
+                                        return(
+                                            <StyledParagraph key = {item.id}> {item.content} </StyledParagraph>
+                                        )
+                                    case "si":
+                                        return(
+                                            <SingleImage key = {item.id} image = {item.content} />
+                                        )
+                                    case "pp":
+                                        return(
+                                            <PowerPoint key = {item.id} slide = {item.content} />
+                                        )
+                                    case "ps":
+                                        return(
+                                            <Poster key = {item.id} poster = {item.content} />
+                                        )
+                                    case "v":
+                                        return(
+                                            <Video key = {item.id} video = {item.content} />
+                                        )
+                                    default: 
+                                        return(
+                                            <div></div>
+                                        )
+                            }
+                            }
+                            )}
+                        </>
+                    )
+                };
+                // Component to go on the header of a project.
+                const ProjectHeader = ({className, name, authors}) => {
+                    let authorString = "";
+                    for(let i = 0; i < authors.length; i++){
+                        if(i === 0){
+                            authorString+= authors[i];
+                        }else if(i == authors.length - 1){
+                            authorString+= (", and " + authors[i]);
+                        } else {
+                            authorString+= (", " + authors[i]);
+                        }
+                    }
+                    return(
+                        <div>
+                                <h1> {name} </h1>
+                            
+                            <div>
+                                <h2> by, </h2>
+                                <h3> {authorString} </h3>
+                            </div>
+                        </div>
+                    )
+                };
+
+                const Video = ({className,video})=>{
+                return(
+                    <div className = {className}>
+                        <VideoFile source src = {video} type="video/mp4"></VideoFile>
+                    </div>
+                )
+                }
+                const SingleImage = ({className,image})=>{
+                return(
+                    <div className = {className}>
+                        <StyledImage src = {image}></StyledImage>
+                    </div>
+                )
+                }
+
+            const PowerPoint = ({className,slide})=>{
+                return(
+                    <div className = {className}>
+                        <PowerPointImage src = {slide}></PowerPointImage>
+                    </div>
+                )
+            }
+
+            
+
+            const Poster = ({className,poster})=>{
+                return(
+                    <div className = {className}>
+                        <PosterImage src = {poster}></PosterImage>
+                    </div>
+                )
+            }
+                // Styled Components --------------------------------------------------------------------------------------------------------------------
+				const StyledApp = styled(App)`
+					height: 100%;
+                `;
+                const StyledHeaderOne = styled.h1`
+                color: #5A5A5A;
+                size; 20pt;
+                font-family: calibri;
+                font-weight: bold;
+            `;  
+
+            const StyledHeaderTwo = styled.h2`
+                color: #5A5A5A;
+                font-family: calibri;
+            `;
+
+            const StyledParagraph = styled.p`
+                size: 12pt;
+                font-family: calibri;
+                color: black;
+            `;
+
+            const StyledLi = styled.li`
+                color: #3D3028;
+                size: 14pt:
+                font-family: calibri;
+            `
+
+            const StyledImage = styled.img`
+                width: 30%;
+                display: block;
+                margin: auto;
+            `
+            const VideoFile = styled.video`
+                display: block;
+                margin: auto;
+                width: 60%;
+                margin-top: 20px
+            `
+            const PowerPointImage = styled.img`
+                display: block;
+                margin: auto;
+                width: 60%;
+                margin-top: 20px
+            `
+            const PosterImage = styled.img`
+                display: block;
+                margin: auto;
+                width: 70%;
+                margin-top: 40px
+            `
+				//Renderer
+				ReactDOM.render(
+					<>
+						<App/>
+					</>,
+					document.getElementById("root")
+				);
+			
+		</script>
+	</body>
+</html>

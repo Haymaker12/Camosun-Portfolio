@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "TimesNewRoman";
+    src: local("TimesNewRoman.ttf"),
+      url("./fonts/TimesNewRoman.ttf") format("truetype");
+    font-weight: normal;
+}
+
+@font-face {
+font-family: "Helvetica";
+src: local("Helvetica.ttf"),
+    url("./fonts/Helvetica.ttf") format("truetype");
+font-weight: normal;
+}
+
+@font-face {
+    font-family: "Verdana";
+    src: local("Verdana.ttf"),
+        url("./fonts/Verdana.ttf") format("truetype");
+    font-weight: normal;
+}
