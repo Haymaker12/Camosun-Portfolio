@@ -1,0 +1,5 @@
+CRST OpenCV Example - Austin
+KCF OpenCV Example - John.C
+MOSSE OpenCV Example - Alexander
+Blob, Binaryization OpenCV Example - John.C
+Motion Detection OpenCV Example - John.C
